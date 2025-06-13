@@ -1,12 +1,16 @@
 import os
 from flask import Flask, request, render_template, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.applications.inception_v3 import preprocess_input
+import numpy as np
 
 # --- Configuração Inicial ---
 app = Flask(__name__, template_folder="template")
 
 # Configura o caminho para a pasta de uploads
-UPLOAD_FOLDER = 'file_uploaded'
+UPLOAD_FOLDER = 'flaskr/file_uploaded'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Garante que a pasta de uploads exista
@@ -15,12 +19,72 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # Carrega o modelo de IA pré-treinado (MobileNetV2) uma única vez ao iniciar o servidor
 # Isso evita recarregar o modelo a cada requisição, o que seria muito lento.
 
+# --- 1. Configuração dos Caminhos ---
+# Caminho para o modelo salvo
+caminho_modelo_salvo = 'flaskr/modelo_garbage_inception_v1.keras'
 
-def classify_image(image_path):
+
+# --- 2. Carregar o modelo ---
+try:
+    model = load_model(caminho_modelo_salvo)
+    print("✅ Modelo carregado com sucesso!")
+except Exception as e:
+    print(f"❌ ERRO ao carregar o modelo: {e}")
+
+
+def classify_image(image_path, model):
     """
     Função para carregar uma imagem, pré-processá-la e classificá-la usando o modelo MobileNetV2.
     """
-    return [[1, "Orgâncio", 0.95]]  # Simulação de classificação
+    # --- 3. Carregar e pré-processar a imagem ---
+    try:
+        img = load_img(image_path, target_size=(299, 299))
+        img_array = img_to_array(img)
+        img_array = np.expand_dims(img_array, axis=0) # Adiciona a dimensão do batch
+        img_array = preprocess_input(img_array) # Aplica o pré-processamento do InceptionV3
+
+        print(f"✅ Imagem '{image_path}' carregada e pré-processada com sucesso!")
+    except FileNotFoundError:
+        print(f"❌ ERRO: O arquivo de imagem '{image_path}' não foi encontrado. Verifique o caminho.")
+    except Exception as e:
+        print(f"❌ ERRO: Ocorreu um problema ao carregar ou pré-processar a imagem: {e}")
+
+    # --- 4. Fazer a previsão ---
+    try:
+        predictions = model.predict(img_array)
+        print("✅ Previsão realizada com sucesso!")
+        # print(predictions) # Descomente para ver os valores brutos das probabilidades
+    except Exception as e:
+        print(f"❌ ERRO ao fazer a previsão: {e}")
+
+    # --- 5. Interpretar o resultado (Usar nomes das classes fornecidos) ---
+    # Lista de nomes das classes fornecida pelo usuário
+    class_labels = [
+        'cardboard',
+        'glass',
+        'metal',
+        'paper',
+        'plastic',
+        'trash'
+    ]
+    try:
+    # Obter a classe prevista (aquela com a maior probabilidade)
+        predicted_class_index = np.argmax(predictions)
+
+    # Verificar se o índice previsto está dentro dos limites da lista de classes
+        if predicted_class_index < len(class_labels):
+            predicted_class_label = class_labels[predicted_class_index]
+            print(f"✅ Classe prevista: {predicted_class_label} (prob {np.max(predictions[0])*100:.2f}%)")
+            return [predicted_class_label, np.max(predictions[0])]
+            
+        else:
+            print(f"\nAVISO: O índice da classe prevista ({predicted_class_index}) está fora dos limites da lista de classes fornecida.")
+            print(f"Probabilidades por classe: {predictions[0]}") # Mostra as probabilidades para cada classe
+
+
+    except Exception as e:
+        print(f"❌ ERRO ao interpretar o resultado: {e}")
+
 
 # --- Rotas da Aplicação ---
 
@@ -45,9 +109,9 @@ def upload_file():
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
-
+        print(f"✅ Arquivo '{filename}' salvo em '{filepath}'")
         # Chama a função de classificação
-        predictions = classify_image(filepath)
+        predictions = classify_image(filepath, model)
         
         # Renderiza a página de resultado, passando o nome do arquivo e as predições
         return render_template('upload/result.html', filename=filename, predictions=predictions)

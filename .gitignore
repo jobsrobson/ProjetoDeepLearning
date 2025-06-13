@@ -1,2 +1,5 @@
 .venv
 tests
+/flaskr/__pycache__
+/flaskr/modelo_garbage_inception_v1.keras
+/flaskr/file_uploaded/

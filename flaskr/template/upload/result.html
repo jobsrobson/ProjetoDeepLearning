@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,33 +10,39 @@
         .container { background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; max-width: 600px; }
         h1 { color: #333; }
         img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 20px; border: 1px solid #ddd; }
-        .results { margin-top: 30px; text-align: left; }
-        li { list-style-type: none; background-color: #e9ecef; margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .results { margin-top: 30px; }
+        /* Estilo para a caixa de resultado único */
+        .prediction-box {
+            background-color: #e9ecef;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 1.2em;
+        }
         .label { font-weight: bold; color: #0056b3; }
         .score { color: #555; }
         a { display: inline-block; margin-top: 30px; background-color: #28a745; color: white; padding: 12px 20px; border-radius: 5px; text-decoration: none; transition: background-color 0.3s; }
         a:hover { background-color: #218838; }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Resultado da Análise</h1>
-        
+
         <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Imagem Enviada">
 
         <div class="results">
             <h2>A IA acredita que esta imagem é:</h2>
-            <ul>
-                {% for id, label, score in predictions %}
-                <li>
-                    <span class="label">{{ label | replace('_', ' ') | title }}</span>: 
-                    <span class="score">{{ "%.2f"|format(score * 100) }}% de certeza</span>
-                </li>
-                {% endfor %}
-            </ul>
+            <div class="prediction-box">
+                <span class="label">{{ predictions[0] | replace('_', ' ') | title }}</span>
+                <br>
+                <span class="score">Confiança: {{ "%.2f"|format(predictions[1] * 100) }}%</span>
+            </div>
         </div>
-        
+
         <a href="/">Enviar outra imagem</a>
     </div>
 </body>
+
 </html>
