@@ -1,35 +1,47 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OhmVision - Identifique resistores com IA</title>
+  <title>Recicla.AI - Identificador de Recicláveis com IA</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- link CSS do Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      /* Estilo customizado para o botão de arquivo para melhor aparência */
+      input[type="file"]::file-selector-button {
+        @apply bg-green-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-green-700 transition-colors duration-300;
+        border: none;
+      }
+  </style>
 </head>
 
 <body class="font-sans bg-gray-50 min-h-screen">
-  <header class="bg-indigo-700 text-white shadow-lg">
+  <header class="bg-green-700 text-white shadow-lg">
     <div class="container mx-auto px-4 py-6">
       <div class="flex justify-between items-center">
         <div class="flex items-center space-x-2">
-          <i class="fas fa-bolt text-2xl text-yellow-300"></i>
-          <h1 class="text-2xl font-bold">OhmVision</h1>
+          <i class="fas fa-leaf text-2xl text-green-300"></i>
+          <h1 class="text-2xl font-bold">Recicla.AI</h1>
         </div>
         <nav class="hidden md:flex space-x-6">
-          <a href="#how-it-works" class="hover:text-indigo-200 transition">Como funciona</a>
-          <a href="#features" class="hover:text-indigo-200 transition">Recursos</a>
-          <a href="#contact" class="hover:text-indigo-200 transition">Contato</a>
+          <a href="#how-it-works" class="hover:text-green-200 transition">Como funciona</a>
+          <a href="#features" class="hover:text-green-200 transition">Recursos</a>
+          <a href="#contact" class="hover:text-green-200 transition">Contato</a>
         </nav>
         <button class="md:hidden text-xl" onclick="toggleMenu()">
           <i class="fas fa-bars"></i>
         </button>
       </div>
       <div id="mobileMenu" class="hidden md:hidden mt-4 space-y-2">
-        <a href="#how-it-works" class="block hover:bg-indigo-600 px-2 py-1 rounded">Como funciona</a>
-        <a href="#features" class="block hover:bg-indigo-600 px-2 py-1 rounded">Recursos</a>
-        <a href="#contact" class="block hover:bg-indigo-600 px-2 py-1 rounded">Contato</a>
+        <a href="#how-it-works" class="block hover:bg-green-600 px-2 py-1 rounded">Como funciona</a>
+        <a href="#features" class="block hover:bg-green-600 px-2 py-1 rounded">Recursos</a>
+        <a href="#contact" class="block hover:bg-green-600 px-2 py-1 rounded">Contato</a>
       </div>
     </div>
   </header>
@@ -38,36 +50,29 @@
     <!-- Hero Section -->
     <section class="text-center mb-20">
       <div class="max-w-3xl mx-auto">
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Identifique resistores elétricos com IA</h2>
-        <p class="text-xl text-gray-600 mb-8">Envie uma foto do resistor e nosso sistema de deep learning irá
-          identificar o valor e tolerância automaticamente.</p>
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Identifique materiais recicláveis com IA</h2>
+        <p class="text-xl text-gray-600 mb-8">Envie uma foto do objeto que quer descartar e nossa IA mostrará a lixeira correta para o descarte.</p>
 
         <form action="/upload" method="post" enctype="multipart/form-data" class="w-full">
           <div class="flex flex-col items-center">
-            <div id="dropzone" class="dropzone bg-white rounded-lg p-8 w-full max-w-md mb-6 cursor-pointer">
+            <div id="dropzone" class="border-2 border-dashed border-gray-300 bg-white rounded-lg p-8 w-full max-w-md mb-6 cursor-pointer hover:border-green-500 transition-colors duration-300">
               <div class="flex flex-col items-center">
-                <i class="fas fa-cloud-upload-alt text-4xl text-indigo-500 mb-4"></i>
+                <i class="fas fa-cloud-upload-alt text-4xl text-green-500 mb-4"></i>
                 <p class="text-gray-700">Arraste e solte uma imagem aqui ou</p>
-
-                <input id="arquivoBtn" type="file" value="Selecione um arquivo" class="mt-2 px-6 py-2 rounded-md" name="image" required accept="image/*">
-                </input>
+                <label for="arquivoBtn" class="mt-4 bg-green-600 text-white font-semibold py-2 px-6 rounded-lg cursor-pointer hover:bg-green-700 transition-colors duration-300">
+                    Selecione um arquivo
+                </label>
+                <input id="arquivoBtn" type="file" name="image" required accept="image/*" class="hidden">
               </div>
+              <div id="fileName" class="text-center mt-4 text-gray-600"></div>
             </div>
-            <p class="text-sm text-gray-500">Formatos suportados: JPG, PNG (Máx. 5MB)</p>
+            <p class="text-sm text-gray-500 mb-6">Formatos suportados: JPG, PNG (Máx. 5MB)</p>
           </div>
-
-          <input id="enviarBtn" type="submit" value="Enviar Imagem"
-            class="mt-2 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition">
-          </input>
+          <button id="enviarBtn" type="submit" class="bg-green-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-700 transition-transform transform hover:scale-105">
+            ENVIAR IMAGEM
+          </button>
         </form>
 
-
-
-      </div>
-      <div class="flex justify-center mt-12">
-        <div class="bg-indigo-100 rounded-full p-3 animate-pulse">
-          <i class="fas fa-microchip text-indigo-600 text-4xl"></i>
-        </div>
       </div>
     </section>
 
@@ -77,25 +82,25 @@
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Como funciona</h2>
         <div class="grid md:grid-cols-3 gap-8">
           <div class="text-center">
-            <div class="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
-              <i class="fas fa-camera text-indigo-600 text-2xl"></i>
+            <div class="bg-green-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
+              <i class="fas fa-camera-retro text-green-600 text-3xl"></i>
             </div>
             <h3 class="text-xl font-semibold mb-2">1. Envie uma foto</h3>
-            <p class="text-gray-600">Capture ou faça upload de uma imagem nítida do resistor que deseja identificar.</p>
+            <p class="text-gray-600">Faça upload de uma imagem nítida do objeto que deseja reciclar.</p>
           </div>
           <div class="text-center">
-            <div class="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
-              <i class="fas fa-brain text-indigo-600 text-2xl"></i>
+            <div class="bg-green-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
+              <i class="fas fa-brain text-green-600 text-3xl"></i>
             </div>
-            <h3 class="text-xl font-semibold mb-2">2. Inteligência Artificial</h3>
-            <p class="text-gray-600">Nosso modelo de deep learning analisa as faixas de cores e padrões do resistor.</p>
+            <h3 class="text-xl font-semibold mb-2">2. Análise com IA</h3>
+            <p class="text-gray-600">Nosso modelo de deep learning analisa as características visuais do objeto para classificá-lo.</p>
           </div>
           <div class="text-center">
-            <div class="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
-              <i class="fas fa-book text-indigo-600 text-2xl"></i>
+            <div class="bg-green-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
+              <i class="fas fa-recycle text-green-600 text-3xl"></i>
             </div>
             <h3 class="text-xl font-semibold mb-2">3. Obtenha o resultado</h3>
-            <p class="text-gray-600">Receba informações precisas sobre valor, tolerância e código de cores.</p>
+            <p class="text-gray-600">Receba a classificação do material e a indicação da lixeira correta para o descarte.</p>
           </div>
         </div>
       </div>
@@ -105,151 +110,93 @@
     <section id="features" class="py-12 mb-12">
       <div class="max-w-5xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Recursos Avançados</h2>
-        <div class="space-y-12">
-          <div class="flex flex-col md:flex-row gap-8 items-center">
-            <div class="md:w-1/2">
-              <h3 class="text-2xl font-semibold mb-4">Modelo de Deep Learning</h3>
-              <p class="text-gray-600 mb-4">Nosso sistema utiliza redes neurais convolucionais treinadas com milhares de
-                imagens de resistores para garantir precisão na identificação.</p>
-              <ul class="space-y-2">
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                  <span>Precisão superior a 98%</span>
-                </li>
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                  <span>Reconhece resistores de 4, 5 e 6 faixas</span>
-                </li>
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                  <span>Identifica tolerância e coeficiente de temperatura</span>
-                </li>
-              </ul>
-            </div>
-            <div class="md:w-1/2">
-              <div class="bg-indigo-100 p-6 rounded-lg h-full flex items-center justify-center">
-                <i class="fas fa-project-diagram text-6xl text-indigo-600 opacity-80"></i>
+        <div class="bg-white p-8 rounded-lg shadow-sm">
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+              <div class="md:w-1/2">
+                <h3 class="text-2xl font-semibold mb-4 text-green-800">Modelo de Deep Learning</h3>
+                <p class="text-gray-600 mb-4">Nosso sistema utiliza redes neurais convolucionais (CNNs), treinadas com milhares de imagens, para garantir a máxima precisão na identificação.</p>
+                <ul class="space-y-2">
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Alta precisão na classificação</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Reconhece os 5 principais tipos de recicláveis</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                    <span>Indica o tipo de material e a cor exata da lixeira</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="md:w-1/2">
+                <div class="bg-green-100 p-6 rounded-lg h-full flex items-center justify-center">
+                  <i class="fas fa-project-diagram text-6xl text-green-600 opacity-80"></i>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
-            <div class="md:w-1/2">
-              <h3 class="text-2xl font-semibold mb-4">API de Integração</h3>
-              <p class="text-gray-600 mb-4">Disponibilizamos uma API RESTful para integração com seus sistemas,
-                permitindo automatizar a identificação de componentes.</p>
-              <ul class="space-y-2">
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                  <span>Autenticação via JWT</span>
-                </li>
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                  <span>Suporte a Webhooks</span>
-                </li>
-                <li class="flex items-start">
-                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                  <span>Documentação detalhada</span>
-                </li>
-              </ul>
-            </div>
-            <div class="md:w-1/2">
-              <div class="bg-indigo-100 p-6 rounded-lg h-full flex items-center justify-center">
-                <i class="fas fa-code text-6xl text-indigo-600 opacity-80"></i>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
     <!-- Call to Action -->
-    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl p-8 mb-12">
+    <section class="bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl p-8 mb-12">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-4">Experimente agora gratuitamente</h2>
-        <p class="text-xl mb-6">Identifique resistores com precisão em segundos. Sem cadastro necessário.</p>
+        <h2 class="text-3xl font-bold mb-4">Ajude o planeta, recicle certo!</h2>
+        <p class="text-xl mb-6">Identifique recicláveis com precisão em segundos. Sem cadastro necessário.</p>
         <a href="#"
-          class="inline-block bg-white text-indigo-600 font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300">
+          class="inline-block bg-white text-green-700 font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 transform hover:scale-105">
           Testar Agora
         </a>
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-12 mb-12 bg-white rounded-lg shadow-sm">
-      <div class="max-w-4xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Contato</h2>
-        <form class="max-w-lg mx-auto">
-          <div class="mb-4">
-            <label for="name" class="block text-gray-700 mb-2">Nome</label>
-            <input type="text" id="name"
-              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          </div>
-          <div class="mb-4">
-            <label for="email" class="block text-gray-700 mb-2">Email</label>
-            <input type="email" id="email"
-              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          </div>
-          <div class="mb-4">
-            <label for="message" class="block text-gray-700 mb-2">Mensagem</label>
-            <textarea id="message" rows="4"
-              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-          </div>
-          <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition">
-            Enviar Mensagem
-          </button>
-        </form>
-      </div>
-    </section>
   </main>
 
-  <footer class="bg-gray-800 text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-6 md:mb-0">
-          <div class="flex items-center space-x-2">
-            <i class="fas fa-bolt text-2xl text-yellow-300"></i>
-            <h3 class="text-xl font-bold">OhmVision</h3>
-          </div>
-          <p class="mt-2 text-gray-400">Identificação de resistores com IA</p>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mb-6 md:mb-0">
-          <div>
-            <h4 class="text-lg font-semibold mb-3">Links</h4>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-400 hover:text-white transition">Início</a></li>
-              <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition">Como funciona</a></li>
-              <li><a href="#features" class="text-gray-400 hover:text-white transition">Recursos</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-semibold mb-3">Legal</h4>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-400 hover:text-white transition">Termos de uso</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition">Política de privacidade</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-semibold mb-3">Contato</h4>
-            <ul class="space-y-2">
-              <li class="flex items-center">
-                <i class="fas fa-envelope text-gray-400 mr-2"></i>
-                <a href="mailto:contato@ohmvision.com"
-                  class="text-gray-400 hover:text-white transition">contato@ohmvision.com</a>
-              </li>
-              <li class="flex items-center">
-                <i class="fab fa-github text-gray-400 mr-2"></i>
-                <a href="#" class="text-gray-400 hover:text-white transition">GitHub</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-        <p>&copy; 2025 OhmVision. Todos os direitos reservados.</p>
-      </div>
+  <footer class="bg-green-900 text-white py-12">
+    <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2025 Recicla.AI. Todos os direitos reservados.</p>
+        <p class="text-green-300 mt-2">Desenvolvido com IA para um futuro mais sustentável.</p>
     </div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('hidden');
+    }
+
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('arquivoBtn');
+    const fileNameDisplay = document.getElementById('fileName');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('border-green-500', 'bg-green-50');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('border-green-500', 'bg-green-50');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('border-green-500', 'bg-green-50');
+        if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            fileNameDisplay.textContent = `Arquivo selecionado: ${fileInput.files[0].name}`;
+        }
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length) {
+            fileNameDisplay.textContent = `Arquivo selecionado: ${fileInput.files[0].name}`;
+        }
+    });
+  </script>
 
 </body>
 

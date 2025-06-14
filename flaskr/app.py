@@ -5,6 +5,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications.inception_v3 import preprocess_input
 import numpy as np
+from pyngrok import ngrok
 
 # --- Configuração Inicial ---
 app = Flask(__name__, template_folder="template")
@@ -100,6 +101,7 @@ def classify_image(image_path, model):
 @app.route('/')
 def index():
     """ Rota principal que renderiza o formulário de upload. """
+    # Certifique-se de que o nome 'index.html' corresponde ao seu arquivo na pasta de templates
     return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
@@ -142,5 +144,17 @@ def uploaded_file(filename):
     """ Rota para servir os arquivos da pasta de uploads para exibição no HTML. """
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+# --- Inicialização do Servidor com ngrok ---
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Define a porta do Flask
+    port = 5000
+    
+    # Abre um túnel HTTP para a porta 5000
+    public_url = ngrok.connect(port)
+    print("====================================================================")
+    print(f"✅ Link público para a apresentação: {public_url}")
+    print("====================================================================")
+    print("Pressione CTRL+C para encerrar o servidor e o túnel do ngrok.")
+
+    # Inicia o servidor Flask
+    app.run(port=port)

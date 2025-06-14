@@ -1,48 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado da Classificação</title>
+    <title>Resultado da Análise - Recicla.AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f4f9; margin: 0; padding: 20px; box-sizing: border-box;}
-        .container { background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; max-width: 600px; }
-        h1 { color: #333; }
-        img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 20px; border: 1px solid #ddd; }
-        .results { margin-top: 30px; }
-        /* Estilo para a caixa de resultado único */
-        .prediction-box {
-            background-color: #e9ecef;
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 8px;
-            font-size: 1.2em;
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        .label { font-weight: bold; color: #0056b3; }
-        .score { color: #555; }
-        a { display: inline-block; margin-top: 30px; background-color: #28a745; color: white; padding: 12px 20px; border-radius: 5px; text-decoration: none; transition: background-color 0.3s; }
-        a:hover { background-color: #218838; }
     </style>
 </head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
 
-<body>
-    <div class="container">
-        <h1>Resultado da Análise</h1>
+    <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 w-full max-w-lg mx-auto text-center">
 
-        <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Imagem Enviada">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Resultado da Análise</h1>
 
-        <div class="results">
-            <h2>A IA acredita que esta imagem é:</h2>
-            <div class="prediction-box">
-                <span class="label">{{ predictions[0] | replace('_', ' ') | title }}</span>
-                <br>
-                <span class="score">Confiança: {{ "%.2f"|format(predictions[1] * 100) }}%</span>
+        <!-- Imagem Enviada -->
+        <div class="mb-6">
+            <img src="{{ url_for('uploaded_file', filename=filename) }}" 
+                 alt="Imagem enviada" 
+                 class="rounded-lg shadow-md max-w-full h-auto mx-auto max-h-64 object-cover">
+        </div>
+
+        <!-- Resultados da Classificação -->
+        <div class="space-y-4">
+            <div>
+                <p class="text-gray-600 text-lg">Material Identificado:</p>
+                <h2 class="text-3xl font-bold" style="color: {{ result_info.hex_cor }};">{{ result_info.nome }}</h2>
+                <p class="text-sm text-gray-500 mt-1">(Confiança: {{ (confidence * 100) | round(2) }}%)</p>
+            </div>
+
+            <!-- Círculo com a cor da lixeira -->
+            <div class="flex justify-center items-center">
+                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center shadow-inner" style="background-color: {{ result_info.hex_cor }};">
+                     <span class="text-white text-xl font-semibold">{{ result_info.cor_lixeira }}</span>
+                </div>
+            </div>
+            
+            <!-- Descrição/Instrução -->
+            <div class="bg-gray-50 rounded-lg p-4">
+                <p class="text-gray-800 text-lg font-medium">{{ result_info.descricao }}</p>
             </div>
         </div>
 
-        <a href="/">Enviar outra imagem</a>
+        <!-- Botão para Voltar -->
+        <div class="mt-8">
+            <a href="{{ url_for('index') }}" 
+               class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Analisar Outra Imagem
+            </a>
+        </div>
     </div>
-</body>
 
+    <footer class="mt-8 text-center text-gray-500 text-sm">
+        <p>Recicla.AI - Identificação de recicláveis com Inteligência Artificial.</p>
+    </footer>
+
+</body>
 </html>
