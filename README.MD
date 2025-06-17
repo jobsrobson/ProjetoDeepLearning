@@ -13,16 +13,16 @@ O processo é simples e intuitivo, dividido em três etapas:
 3. **Resultado Instantâneo**: A aplicação retorna o tipo de material identificado, a cor da lixeira correspondente e o nível de confiança da previsão.
 
 ## 🚀 Principais Recursos
-- Classificação Automática: Identifica 6 categorias de resíduos (papel, papelão, plástico, metal, vidro e lixo comum).
-- Interface Web Amigável: Design limpo e responsivo para uma experiência de usuário agradável em qualquer dispositivo.
-- Indicação Visual: Mostra a cor da lixeira correta, facilitando a memorização e o descarte adequado.
-- Modelo de Alta Precisão: Utiliza um modelo de Deep Learning treinado com um vasto conjunto de imagens para garantir alta acurácia.
-- API Flask: Construído sobre um backend robusto em Python com Flask.
+- **Classificação Automática**: Identifica 6 categorias de resíduos (papel, papelão, plástico, metal, vidro e lixo comum).
+- **Interface Web Amigável**: Design limpo e responsivo para uma experiência de usuário agradável em qualquer dispositivo.
+- **Indicação Visual**: Mostra a cor da lixeira correta, facilitando a memorização e o descarte adequado.
+- **Modelo de Alta Precisão**: Utiliza um modelo de Deep Learning treinado com um vasto conjunto de imagens para garantir alta acurácia.
+- **API Flask**: Construído sobre um backend robusto em Python com Flask.
 
 ## 💻 Tecnologias Utilizadas
-- Backend: Python, Flask
-- Deep Learning: TensorFlow, Keras
-- Frontend: HTML5, Tailwind CSS
+- **Backend**: Python, Flask
+- **Deep Learning**: TensorFlow, Keras
+- **Frontend**: HTML5, Tailwind CSS
 
 ## ▶️ Como Executar o Projeto
 Você pode executar esta aplicação de duas maneiras: localmente em sua máquina ou diretamente no Google Colab.
