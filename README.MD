@@ -64,7 +64,16 @@ Para facilitar a demonstração sem a necessidade de configuração local, você
 Passos:
 
 1. Abra o Notebook: [Clique aqui](https://colab.research.google.com/drive/1cuQNo_WoTij9IowcGoTLzmjg_PFZQEOC?usp=sharing) para abrir o notebook no Google Colab.
-2. Adicione seu Token do Ngrok: Na Célula 2, insira seu token de autenticação do ngrok para garantir uma conexão estável. Você pode obter um gratuitamente em [Ngrok.com](ngrok.com).
+2. Configure seu Token do Ngrok (Obrigatório):
+
+    - No menu à esquerda do Colab, clique no ícone de chave (🔑) para abrir o painel de "Segredos".
+    - Clique em "+ Adicionar novo segredo".
+    - No campo name, digite NGROK_AUTH_TOKEN.
+    - No campo value, cole o seu token de autenticação do ngrok. Você pode obter um gratuitamente em ngrok.com.
+    - Importante: Ative a chavinha "Acesso do notebook".
+
+    **Nota de Segurança**: O recurso "Segredos" do Colab é pessoal e vinculado à sua conta Google. Outras pessoas que abrirem o notebook não terão acesso ao seu token e precisarão seguir o passo 2 para configurar o próprio token. Esta é a prática recomendada para manter as chaves de acesso seguras.
+
 3. Execute as Células: Execute todas as células do notebook em ordem. A última célula irá clonar este repositório, iniciar a aplicação e fornecer um link público (.ngrok-free.app) para você acessar o projeto.
 
 
