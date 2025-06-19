@@ -24,6 +24,9 @@ O processo é simples e intuitivo, dividido em três etapas:
 - **Deep Learning**: TensorFlow, Keras
 - **Frontend**: HTML5, Tailwind CSS
 
+## 👨‍💻 Assista a Apresentação
+Você pode assistir a uma apresentação do projeto no Figma: [Assista aqui](https://www.figma.com/deck/FlZJyTo3Q3Drv52RpnbIvf/Recicla.AI?node-id=19-60&t=UCv6MSy0oCYXEVJl-1).
+
 ## ▶️ Como Executar o Projeto
 Você pode executar esta aplicação de duas maneiras: localmente em sua máquina ou diretamente no Google Colab.
 
