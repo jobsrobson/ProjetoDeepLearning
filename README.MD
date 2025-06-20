@@ -99,6 +99,6 @@ ProjetoDeepLearning/
 Este projeto está sob a licença GPL-3.0. Veja o arquivo LICENSE para mais detalhes.
 
 ## 👨‍💻 Autores
-- [Robson Ricardo](github.com/jobsrobson)
-- [Felipe Toledo](github.com/snowstoledo)
-- [Guilherme Duarte](github.com/guirocduarte)
+- [Robson Ricardo](https://github.com/jobsrobson)
+- [Felipe Toledo](https://github.com/snowstoledo)
+- [Guilherme Duarte](https://github.com/guirocduarte)
